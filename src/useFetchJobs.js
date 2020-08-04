@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from "react";
-import axios from "axios";
+import aaxios from "axios";
 const ACTIONS = {
   MAKE_REQUEST: "make-request",
   GET_DATA: "get-data",
@@ -27,15 +27,15 @@ export const useFetchJobs = (params, page) => {
     const [state, dispatch] = useReducer(reducer, {jobs: [], loading: true, })
 
     useEffect(() =>{
-        const cancelToken = axios.CancelToken.sourse()
+        const cancelToken = aaxios.CancelToken.source()
         dispatch({type: ACTIONS.MAKE_REQUEST})
-        axios.get(BASE_URL, {
+        aaxios.get(BASE_URL, {
             cancelToken: cancelToken.token,
             params: {markdown:  true, page, ...params}
         }).then(res => {
             dispatch({type: ACTIONS.GET_DATA, payload: {jobs: res.data} })
         }).catch(e => {
-            if(axios.isCancel(e)) return
+            if(aaxios.isCancel(e)) return
             dispatch({type: ACTIONS.ERROR, payload: {error: e}})
         })
         return () => {
